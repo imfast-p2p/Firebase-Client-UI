@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { messaging } from "./firebase";
+import { messaging } from "./firebase"; // Ensure this is correctly imported
 import { getToken } from "firebase/messaging";
-import logo from "./logo.svg";
 import "./App.css";
 
 var token;
@@ -11,8 +10,7 @@ function App() {
     if (permission === "granted") {
       // Generate Token
       token = await getToken(messaging, {
-        vapidKey:
-          "BE4JE-reIx_LmC6QShTH0YtjV9B3ruqeSS-XKkjTWTfaXhqTahv2XmZxE25qITozzcnk0FXwLx3xOLL-anb3PLk",
+        vapidKey: "BE4JE-reIx_LmC6QShTH0YtjV9B3ruqeSS-XKkjTWTfaXhqTahv2XmZxE25qITozzcnk0FXwLx3xOLL-anb3PLk",
       });
       console.log("Token Gen", token);
       // Send this token  to server ( db)
@@ -27,30 +25,33 @@ function App() {
   }, []);
 
   const callNotifications = () => {
-    console.log(token, typeof token)
-    var tokenData = [token]
+    console.log(token, typeof token);
+    var tokenData = [token];
     var data = {
-      tokens: tokenData
+      tokens: tokenData,
     };
-    console.log(data)
-    fetch(`https://firebase-p2pflow.onrender.com/api/notification/sendToAll`, {
-      method: 'post',
-      mode: 'cors',
+    console.log(data);
+    fetch("https://firebase-p2pflow.onrender.com/api/notification/sendToAll", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
-    }).then(response => {
-      console.log(response);
-      return response.text(); // Parse the response as JSON
+      body: JSON.stringify(data),
     })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text(); // Parse the response as JSON
+      })
       .then((resdata) => {
         console.log(resdata);
-        alert("called");
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
+
   return (
     <div className="App">
       <button onClick={callNotifications}>Call Notification</button>
