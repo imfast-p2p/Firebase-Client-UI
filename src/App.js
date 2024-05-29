@@ -35,7 +35,7 @@ function App() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        token: token
+        tokens: token
       })
     }).then(response => {
       return response.json();
