@@ -32,17 +32,17 @@ function App() {
     var data = {
       tokens: tokenData
     };
+    console.log(data)
     fetch(`https://firebase-p2pflow.onrender.com/api/notification/sendToAll`, {
       method: 'post',
       mode: 'cors',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     }).then(response => {
-      console.log(response)
-      return response.json();
+      console.log(response);
+      return response.text(); // Parse the response as JSON
     })
       .then((resdata) => {
         console.log(resdata);
