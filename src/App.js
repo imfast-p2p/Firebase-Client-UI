@@ -38,6 +38,7 @@ function App() {
         tokens: token
       })
     }).then(response => {
+      console.log(response)
       return response.json();
     })
       .then((resdata) => {
