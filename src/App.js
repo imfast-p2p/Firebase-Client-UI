@@ -30,6 +30,7 @@ function App() {
   const callNotifications = () => {
     fetch(`https://firebase-p2pflow.onrender.com/api/notification/sendToAll`, {
       method: 'post',
+      mode: 'cors',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
