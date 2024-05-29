@@ -35,7 +35,7 @@ function App() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        tokens: token
+        tokens: [token]
       })
     }).then(response => {
       console.log(response)
