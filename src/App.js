@@ -27,6 +27,11 @@ function App() {
   }, []);
 
   const callNotifications = () => {
+    console.log(token, typeof token)
+    var tokenData = [token]
+    var data = {
+      tokens: tokenData
+    };
     fetch(`https://firebase-p2pflow.onrender.com/api/notification/sendToAll`, {
       method: 'post',
       mode: 'cors',
@@ -34,9 +39,7 @@ function App() {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        tokens: [token]
-      })
+      body: JSON.stringify(data)
     }).then(response => {
       console.log(response)
       return response.json();
