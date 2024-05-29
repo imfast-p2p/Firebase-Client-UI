@@ -4,18 +4,17 @@ import { getToken } from "firebase/messaging";
 import logo from "./logo.svg";
 import "./App.css";
 
-var tokenData;
+var token;
 function App() {
   async function requestPermission() {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
       // Generate Token
-      const token = await getToken(messaging, {
+      token = await getToken(messaging, {
         vapidKey:
           "BE4JE-reIx_LmC6QShTH0YtjV9B3ruqeSS-XKkjTWTfaXhqTahv2XmZxE25qITozzcnk0FXwLx3xOLL-anb3PLk",
       });
       console.log("Token Gen", token);
-      tokenData = token;
       // Send this token  to server ( db)
     } else if (permission === "denied") {
       alert("You denied for the notification");
@@ -36,7 +35,7 @@ function App() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        token: tokenData
+        token: token
       })
     }).then(response => {
       return response.json();
